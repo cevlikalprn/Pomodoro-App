@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/timerFragment">
+
+    <fragment
+        android:id="@+id/timerFragment"
+        android:name="com.cevlikalprn.pomodoro.TimerFragment"
+        android:label="fragment_timer"
+        tools:layout="@layout/fragment_timer" >
+        <action
+            android:id="@+id/action_timerFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_timerFragment_to_shortBreakFragment"
+            app:destination="@id/shortBreakFragment" />
+        <action
+            android:id="@+id/action_timerFragment_to_longBreakFragment"
+            app:destination="@id/longBreakFragment" />
+        <argument
+            android:name="pomodoro"
+            app:argType="string"
+            android:defaultValue="25" />
+        <argument
+            android:name="shortBreak"
+            app:argType="string"
+            android:defaultValue="5" />
+        <argument
+            android:name="longBreak"
+            app:argType="string"
+            android:defaultValue="15" />
+        <argument
+            android:name="isItSet"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.cevlikalprn.pomodoro.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_timerFragment"
+            app:destination="@id/timerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/longBreakFragment"
+        android:name="com.cevlikalprn.pomodoro.LongBreakFragment"
+        android:label="fragment_long_break"
+        tools:layout="@layout/fragment_long_break" >
+        <action
+            android:id="@+id/action_longBreakFragment_to_timerFragment"
+            app:destination="@id/timerFragment" />
+        <argument
+            android:name="longBreak"
+            app:argType="string"
+            android:defaultValue="15" />
+    </fragment>
+    <fragment
+        android:id="@+id/shortBreakFragment"
+        android:name="com.cevlikalprn.pomodoro.ShortBreakFragment"
+        android:label="fragment_short_break"
+        tools:layout="@layout/fragment_short_break" >
+        <action
+            android:id="@+id/action_shortBreakFragment_to_timerFragment"
+            app:destination="@id/timerFragment" />
+        <argument
+            android:name="shortBreak"
+            app:argType="string"
+            android:defaultValue="5" />
+    </fragment>
+</navigation>
