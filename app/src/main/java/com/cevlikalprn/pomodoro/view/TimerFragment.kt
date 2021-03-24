@@ -1,4 +1,4 @@
-package com.cevlikalprn.pomodoro
+package com.cevlikalprn.pomodoro.view
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -10,12 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.navigation.Navigation
-import androidx.navigation.Navigator
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.cevlikalprn.pomodoro.EditTimer
+import com.cevlikalprn.pomodoro.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.util.*
 
 
 class TimerFragment : Fragment() {

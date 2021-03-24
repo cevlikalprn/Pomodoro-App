@@ -1,4 +1,4 @@
-package com.cevlikalprn.pomodoro
+package com.cevlikalprn.pomodoro.view
 
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -11,34 +11,36 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import kotlin.concurrent.timer
+import com.cevlikalprn.pomodoro.EditTimer
+import com.cevlikalprn.pomodoro.R
 
 
-class ShortBreakFragment : Fragment() {
+class LongBreakFragment : Fragment() {
 
     private lateinit var btnStart: Button
     private lateinit var btnBack: ImageButton
-    private lateinit var shortBreakTxt: TextView
+    private lateinit var longBreakTxt: TextView
 
     private var checkBtnStart = true
-    private var timerDuration: Long = 5*60000
+    private var timerDuration: Long = 15*60000
     private var tick: Long = 1000
-    private lateinit var shortBreak: String
+    private lateinit var longBreak: String
 
-    private lateinit var shortBreakTimer: CountDownTimer
+    private lateinit var longBreakTimer: CountDownTimer
 
     private lateinit var editTimer: EditTimer
 
     private fun init(){
-        btnStart = requireView().findViewById(R.id.btn_start_short_break)
-        btnBack = requireView().findViewById(R.id.btn_short_break_to_timer)
-        shortBreakTxt = requireView().findViewById(R.id.short_break_txtview)
+        btnStart = requireView().findViewById(R.id.btn_start_long_break)
+        btnBack = requireView().findViewById(R.id.btn_long_break_to_timer)
+        longBreakTxt = requireView().findViewById(R.id.long_break_txtview)
 
         editTimer = EditTimer()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -46,7 +48,7 @@ class ShortBreakFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_short_break, container, false)
+        return inflater.inflate(R.layout.fragment_long_break, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,47 +56,46 @@ class ShortBreakFragment : Fragment() {
         init()
 
         arguments?.let {
-            shortBreak = TimerFragmentArgs.fromBundle(it).shortBreak
+            longBreak = TimerFragmentArgs.fromBundle(it).longBreak
         }
-        timerDuration = shortBreak.toLong() * 60000
+        timerDuration = longBreak.toLong() * 60000
         val stringTimer = editTimer.setTheTimer(timerDuration)
-        shortBreakTxt.text = stringTimer
+        longBreakTxt.text = stringTimer
 
         btnStart.setOnClickListener {
-            startShortBreak()
+            startLongBreak()
         }
         btnBack.setOnClickListener {
             backToTimer(it)
         }
-
     }
 
     private fun backToTimer(view: View) {
-        val action = ShortBreakFragmentDirections.actionShortBreakFragmentToTimerFragment()
+        val action = LongBreakFragmentDirections.actionLongBreakFragmentToTimerFragment()
         view.findNavController().navigate(action)
     }
 
-    private fun startShortBreak() {
-
+    private fun startLongBreak() {
         if(checkBtnStart){
             btnStart.text = "Stop"
             checkBtnStart = false
 
-            shortBreakTimer = object: CountDownTimer(timerDuration, tick){
+            longBreakTimer = object: CountDownTimer(timerDuration, tick){
                 override fun onFinish() {
-                    findNavController().navigate(R.id.action_shortBreakFragment_to_timerFragment)
+                    findNavController().navigate(R.id.action_longBreakFragment_to_timerFragment)
                 }
                 override fun onTick(millisUntilFinished: Long) {
                     timerDuration = millisUntilFinished
                     val stringTimer = editTimer.setTheTimer(timerDuration)
-                    shortBreakTxt.text = stringTimer
+                    longBreakTxt.text = stringTimer
                 }
             }.start()
         }
         else{
-            shortBreakTimer.cancel()
+            longBreakTimer.cancel()
             btnStart.text = "Start"
             checkBtnStart = true
         }
     }
+
 }
