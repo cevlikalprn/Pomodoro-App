@@ -25,10 +25,14 @@ class LongBreakFragment : Fragment() {
 
     private lateinit var longBreakTimer: CountDownTimer
 
+    private lateinit var editTimer: EditTimer
+
     private fun init(){
         btnStart = requireView().findViewById(R.id.btn_start_long_break)
         btnBack = requireView().findViewById(R.id.btn_long_break_to_timer)
         longBreakTxt = requireView().findViewById(R.id.long_break_txtview)
+
+        editTimer = EditTimer()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +56,8 @@ class LongBreakFragment : Fragment() {
             longBreak = TimerFragmentArgs.fromBundle(it).longBreak
         }
         timerDuration = longBreak.toLong() * 60000
-        setTheLongBreakTimer(timerDuration)
+        val stringTimer = editTimer.setTheTimer(timerDuration)
+        longBreakTxt.text = stringTimer
 
         btnStart.setOnClickListener {
             startLongBreak()
@@ -78,7 +83,8 @@ class LongBreakFragment : Fragment() {
                 }
                 override fun onTick(millisUntilFinished: Long) {
                     timerDuration = millisUntilFinished
-                    setTheLongBreakTimer(millisUntilFinished)
+                    val stringTimer = editTimer.setTheTimer(timerDuration)
+                    longBreakTxt.text = stringTimer
                 }
             }.start()
         }
@@ -89,21 +95,4 @@ class LongBreakFragment : Fragment() {
         }
     }
 
-    private fun setTheLongBreakTimer(millisUntilFinished: Long){
-        val time = millisUntilFinished / 1000
-        val minutes = time.toInt() / 60
-        val seconds = time.toInt() - minutes*60
-        editLongBreakText(minutes, seconds)
-    }
-    private fun editLongBreakText(minutes: Int ,seconds: Int){
-        var stringMinutes = minutes.toString()
-        var stringSeconds = seconds.toString()
-        if(minutes <=9){
-            stringMinutes = "0" + stringMinutes
-        }
-        if(seconds <= 9){
-            stringSeconds = "0" + stringSeconds
-        }
-        longBreakTxt.text = "$stringMinutes:$stringSeconds"
-    }
 }

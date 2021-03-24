@@ -27,10 +27,14 @@ class ShortBreakFragment : Fragment() {
 
     private lateinit var shortBreakTimer: CountDownTimer
 
+    private lateinit var editTimer: EditTimer
+
     private fun init(){
         btnStart = requireView().findViewById(R.id.btn_start_short_break)
         btnBack = requireView().findViewById(R.id.btn_short_break_to_timer)
         shortBreakTxt = requireView().findViewById(R.id.short_break_txtview)
+
+        editTimer = EditTimer()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +57,8 @@ class ShortBreakFragment : Fragment() {
             shortBreak = TimerFragmentArgs.fromBundle(it).shortBreak
         }
         timerDuration = shortBreak.toLong() * 60000
-        setTheShortBreakTimer(timerDuration)
+        val stringTimer = editTimer.setTheTimer(timerDuration)
+        shortBreakTxt.text = stringTimer
 
         btnStart.setOnClickListener {
             startShortBreak()
@@ -81,7 +86,8 @@ class ShortBreakFragment : Fragment() {
                 }
                 override fun onTick(millisUntilFinished: Long) {
                     timerDuration = millisUntilFinished
-                    setTheShortBreakTimer(millisUntilFinished)
+                    val stringTimer = editTimer.setTheTimer(timerDuration)
+                    shortBreakTxt.text = stringTimer
                 }
             }.start()
         }
@@ -91,24 +97,4 @@ class ShortBreakFragment : Fragment() {
             checkBtnStart = true
         }
     }
-
-    private fun setTheShortBreakTimer(millisUntilFinished: Long){
-        val time = millisUntilFinished / 1000
-        val minutes = time.toInt() / 60
-        val seconds = time.toInt() - minutes*60
-        editShortBreakText(minutes, seconds)
-    }
-
-    private fun editShortBreakText(minutes: Int ,seconds: Int){
-        var stringMinutes = minutes.toString()
-        var stringSeconds = seconds.toString()
-        if(minutes <=9){
-            stringMinutes = "0" + stringMinutes
-        }
-        if(seconds <= 9){
-            stringSeconds = "0" + stringSeconds
-        }
-        shortBreakTxt.text =  "$stringMinutes:$stringSeconds"
-    }
-
 }

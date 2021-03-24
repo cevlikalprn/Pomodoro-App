@@ -42,6 +42,8 @@ class TimerFragment : Fragment() {
     private val defaultShortBreak = "5"
     private val defaultLongBreak = "15"
 
+    private lateinit var editTimer: EditTimer
+
     //Initialize
     private fun init(){
         btnShortBreak = requireView().findViewById(R.id.btn_short_break)
@@ -49,6 +51,8 @@ class TimerFragment : Fragment() {
         btnStart = requireView().findViewById(R.id.btn_start_short_break)
         btnSettings = requireView().findViewById(R.id.btn_settings)
         txtTimer = requireView().findViewById(R.id.short_break_txtview)
+
+        editTimer = EditTimer() // Timer'ı düzenleyen class
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,7 +93,8 @@ class TimerFragment : Fragment() {
 
 
         timerDuration = pomodoro.toLong() * 60000
-        setTheTimer(timerDuration)
+        val stringTimer = editTimer.setTheTimer(timerDuration)
+        txtTimer.text = stringTimer
 
         btnShortBreak.setOnClickListener {
             jumpToShortBreak(it)
@@ -124,7 +129,8 @@ class TimerFragment : Fragment() {
                 }
                 override fun onTick(millisUntilFinished: Long) {
                     timerDuration = millisUntilFinished
-                    setTheTimer(millisUntilFinished)
+                    val stringTimer = editTimer.setTheTimer(millisUntilFinished)
+                    txtTimer.text = stringTimer
                 }
             }.start()
         }
@@ -134,25 +140,6 @@ class TimerFragment : Fragment() {
             checkBtnStart = true
         }
 
-    }
-
-    private fun setTheTimer(millisUntilFinished: Long){
-        val time = millisUntilFinished / 1000
-        val minutes = time.toInt() / 60       //minutes
-        val seconds = time.toInt() - minutes*60
-        editTimerText(minutes ,seconds)
-    }
-
-    private fun editTimerText(minutes: Int ,seconds: Int){
-        var stringMinutes = minutes.toString()
-        var stringSeconds = seconds.toString()
-        if(minutes <=9){
-            stringMinutes = "0" + stringMinutes
-        }
-        if(seconds <= 9){
-            stringSeconds = "0" + stringSeconds
-        }
-        txtTimer.text = "$stringMinutes:$stringSeconds"
     }
 
     private fun jumpToSettings(view: View) {
