@@ -96,7 +96,19 @@ class ShortBreakFragment : Fragment() {
         val time = millisUntilFinished / 1000
         val minutes = time.toInt() / 60
         val seconds = time.toInt() - minutes*60
-        shortBreakTxt.text =  "$minutes:$seconds"
+        editShortBreakText(minutes, seconds)
+    }
+
+    private fun editShortBreakText(minutes: Int ,seconds: Int){
+        var stringMinutes = minutes.toString()
+        var stringSeconds = seconds.toString()
+        if(minutes <=9){
+            stringMinutes = "0" + stringMinutes
+        }
+        if(seconds <= 9){
+            stringSeconds = "0" + stringSeconds
+        }
+        shortBreakTxt.text =  "$stringMinutes:$stringSeconds"
     }
 
 }

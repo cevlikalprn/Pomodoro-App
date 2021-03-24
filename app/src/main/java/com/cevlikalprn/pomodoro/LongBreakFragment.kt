@@ -93,7 +93,17 @@ class LongBreakFragment : Fragment() {
         val time = millisUntilFinished / 1000
         val minutes = time.toInt() / 60
         val seconds = time.toInt() - minutes*60
-        longBreakTxt.text =  "$minutes:$seconds"
+        editLongBreakText(minutes, seconds)
     }
-
+    private fun editLongBreakText(minutes: Int ,seconds: Int){
+        var stringMinutes = minutes.toString()
+        var stringSeconds = seconds.toString()
+        if(minutes <=9){
+            stringMinutes = "0" + stringMinutes
+        }
+        if(seconds <= 9){
+            stringSeconds = "0" + stringSeconds
+        }
+        longBreakTxt.text = "$stringMinutes:$stringSeconds"
+    }
 }

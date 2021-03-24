@@ -138,9 +138,21 @@ class TimerFragment : Fragment() {
 
     private fun setTheTimer(millisUntilFinished: Long){
         val time = millisUntilFinished / 1000
-        val minutes = time.toInt() / 60
+        val minutes = time.toInt() / 60       //minutes
         val seconds = time.toInt() - minutes*60
-        txtTimer.text = "$minutes:$seconds"
+        editTimerText(minutes ,seconds)
+    }
+
+    private fun editTimerText(minutes: Int ,seconds: Int){
+        var stringMinutes = minutes.toString()
+        var stringSeconds = seconds.toString()
+        if(minutes <=9){
+            stringMinutes = "0" + stringMinutes
+        }
+        if(seconds <= 9){
+            stringSeconds = "0" + stringSeconds
+        }
+        txtTimer.text = "$stringMinutes:$stringSeconds"
     }
 
     private fun jumpToSettings(view: View) {
