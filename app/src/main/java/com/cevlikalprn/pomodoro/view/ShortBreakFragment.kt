@@ -18,7 +18,7 @@ import com.cevlikalprn.pomodoro.R
 class ShortBreakFragment : Fragment() {
 
     private lateinit var btnStart: Button
-    private lateinit var btnBack: ImageButton
+
     private lateinit var shortBreakTxt: TextView
 
     private var checkBtnStart = true
@@ -32,7 +32,6 @@ class ShortBreakFragment : Fragment() {
 
     private fun init(){
         btnStart = requireView().findViewById(R.id.btn_start_short_break)
-        btnBack = requireView().findViewById(R.id.btn_short_break_to_timer)
         shortBreakTxt = requireView().findViewById(R.id.short_break_txtview)
 
         editTimer = EditTimer()
@@ -64,15 +63,6 @@ class ShortBreakFragment : Fragment() {
         btnStart.setOnClickListener {
             startShortBreak()
         }
-        btnBack.setOnClickListener {
-            backToTimer(it)
-        }
-
-    }
-
-    private fun backToTimer(view: View) {
-        val action = ShortBreakFragmentDirections.actionShortBreakFragmentToTimerFragment()
-        view.findNavController().navigate(action)
     }
 
     private fun startShortBreak() {

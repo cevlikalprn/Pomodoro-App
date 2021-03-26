@@ -18,7 +18,6 @@ import com.cevlikalprn.pomodoro.R
 class LongBreakFragment : Fragment() {
 
     private lateinit var btnStart: Button
-    private lateinit var btnBack: ImageButton
     private lateinit var longBreakTxt: TextView
 
     private var checkBtnStart = true
@@ -32,7 +31,6 @@ class LongBreakFragment : Fragment() {
 
     private fun init(){
         btnStart = requireView().findViewById(R.id.btn_start_long_break)
-        btnBack = requireView().findViewById(R.id.btn_long_break_to_timer)
         longBreakTxt = requireView().findViewById(R.id.long_break_txtview)
 
         editTimer = EditTimer()
@@ -65,14 +63,6 @@ class LongBreakFragment : Fragment() {
         btnStart.setOnClickListener {
             startLongBreak()
         }
-        btnBack.setOnClickListener {
-            backToTimer(it)
-        }
-    }
-
-    private fun backToTimer(view: View) {
-        val action = LongBreakFragmentDirections.actionLongBreakFragmentToTimerFragment()
-        view.findNavController().navigate(action)
     }
 
     private fun startLongBreak() {
