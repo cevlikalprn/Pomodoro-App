@@ -15,10 +15,18 @@
             app:destination="@id/settingsFragment" />
         <action
             android:id="@+id/action_timerFragment_to_shortBreakFragment"
-            app:destination="@id/shortBreakFragment" />
+            app:destination="@id/shortBreakFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
         <action
             android:id="@+id/action_timerFragment_to_longBreakFragment"
-            app:destination="@id/longBreakFragment" />
+            app:destination="@id/longBreakFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <argument
             android:name="pomodoro"
             app:argType="string"
@@ -52,7 +60,11 @@
         tools:layout="@layout/fragment_long_break" >
         <action
             android:id="@+id/action_longBreakFragment_to_timerFragment"
-            app:destination="@id/timerFragment" />
+            app:destination="@id/timerFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
         <argument
             android:name="longBreak"
             app:argType="string"
@@ -65,7 +77,11 @@
         tools:layout="@layout/fragment_short_break" >
         <action
             android:id="@+id/action_shortBreakFragment_to_timerFragment"
-            app:destination="@id/timerFragment" />
+            app:destination="@id/timerFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <argument
             android:name="shortBreak"
             app:argType="string"

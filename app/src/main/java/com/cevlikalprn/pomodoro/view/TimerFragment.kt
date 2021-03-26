@@ -78,7 +78,7 @@ class TimerFragment : Fragment() {
 
         arguments?.let {
             val isItSet = TimerFragmentArgs.fromBundle(it).isItSet
-            if(isItSet == true){    // SettingsFragment'da süre ayarlaması yapıldı mı?
+            if(isItSet){    // SettingsFragment'da süre ayarlaması yapıldı mı?
                 pomodoro = TimerFragmentArgs.fromBundle(it).pomodoro
                 shortBreak = TimerFragmentArgs.fromBundle(it).shortBreak
                 longBreak = TimerFragmentArgs.fromBundle(it).longBreak
@@ -90,6 +90,7 @@ class TimerFragment : Fragment() {
         preferences.edit().putString("short_break", shortBreak).apply()
         preferences.edit().putString("long_break", longBreak).apply()
 
+        println("$pomodoro $shortBreak $longBreak")
 
         timerDuration = pomodoro.toLong() * 60000
         val stringTimer = editTimer.setTheTimer(timerDuration)
@@ -120,10 +121,18 @@ class TimerFragment : Fragment() {
                 override fun onFinish() {
                     btnStart.text = "Start"
                     counter++
-                    if(counter %4 == 0){
-                        findNavController().navigate(R.id.action_timerFragment_to_longBreakFragment)
-                    }else{
-                        findNavController().navigate(R.id.action_timerFragment_to_shortBreakFragment)
+                    if(counter %4 == 0){ // Go to LongBreak
+
+                       //findNavController().navigate(R.id.action_timerFragment_to_longBreakFragment)
+                        val action = TimerFragmentDirections.actionTimerFragmentToLongBreakFragment(longBreak)
+                        findNavController().navigate(action)
+
+                    }else{ //Go to ShortBreak
+
+                        //findNavController().navigate(R.id.action_timerFragment_to_shortBreakFragment)
+                        val action = TimerFragmentDirections.actionTimerFragmentToShortBreakFragment(shortBreak)
+                        findNavController().navigate(action)
+
                     }
                 }
                 override fun onTick(millisUntilFinished: Long) {

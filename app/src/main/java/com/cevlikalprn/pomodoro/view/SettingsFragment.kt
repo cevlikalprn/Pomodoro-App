@@ -55,7 +55,7 @@ class SettingsFragment : Fragment() {
 
     private fun backToTimer(view: View) {
         val shallWeGo = getData()
-        if(shallWeGo == true){
+        if(shallWeGo){
             val action = SettingsFragmentDirections.actionSettingsFragmentToTimerFragment(
                 pomodoro,
                 shortBreak,
