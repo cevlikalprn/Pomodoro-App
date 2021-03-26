@@ -56,6 +56,8 @@ class LongBreakFragment : Fragment() {
         arguments?.let {
             longBreak = TimerFragmentArgs.fromBundle(it).longBreak
         }
+
+
         timerDuration = longBreak.toLong() * 60000
         val stringTimer = editTimer.setTheTimer(timerDuration)
         longBreakTxt.text = stringTimer
