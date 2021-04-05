@@ -1,5 +1,6 @@
 package com.cevlikalprn.pomodoro.view
 
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.findNavController
+import com.cevlikalprn.pomodoro.LocalDataManager
 import com.cevlikalprn.pomodoro.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -56,12 +58,7 @@ class SettingsFragment : Fragment() {
     private fun backToTimer(view: View) {
         val shallWeGo = getData()
         if(shallWeGo){
-            val action = SettingsFragmentDirections.actionSettingsFragmentToTimerFragment(
-                pomodoro,
-                shortBreak,
-                longBreak,
-                true
-            )
+            val action = SettingsFragmentDirections.actionSettingsFragmentToTimerFragment()
             view.findNavController().navigate(action)
         }else{
             Toast.makeText(requireContext(), "Please set the timer", Toast.LENGTH_LONG).show()
@@ -73,6 +70,13 @@ class SettingsFragment : Fragment() {
             pomodoro = pomodoroTime.text.toString()
             shortBreak = shortBreakTime.text.toString()
             longBreak = longBreakTime.text.toString()
+
+            //Put local data
+            val preferences = LocalDataManager.getPreferences(this.requireContext())
+            preferences.edit().putString("pomodoro", pomodoro).apply()
+            preferences.edit().putString("short_break", shortBreak).apply()
+            preferences.edit().putString("long_break", longBreak).apply()
+
             return true
         }
         return false

@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment"
+        app:layout_constraintTop_toBottomOf="@+id/timerFragment"
         app:menu="@menu/bottom_nav_menu"
         app:itemBackground="@color/white"
         app:itemIconTint="@color/purple_500"
@@ -23,7 +23,7 @@
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     <fragment
-        android:id="@+id/fragment"
+        android:id="@+id/timerFragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"

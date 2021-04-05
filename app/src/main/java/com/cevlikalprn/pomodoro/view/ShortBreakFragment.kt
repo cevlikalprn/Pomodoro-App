@@ -7,11 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.TextView
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.cevlikalprn.pomodoro.EditTimer
+import com.cevlikalprn.pomodoro.LocalDataManager
 import com.cevlikalprn.pomodoro.R
 
 
@@ -24,6 +23,7 @@ class ShortBreakFragment : Fragment() {
     private var checkBtnStart = true
     private var timerDuration: Long = 5*60000
     private var tick: Long = 1000
+    private val defaultShortBreak = "5"
     private lateinit var shortBreak: String
 
     private lateinit var shortBreakTimer: CountDownTimer
@@ -53,9 +53,13 @@ class ShortBreakFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
 
-        arguments?.let {
-            shortBreak = TimerFragmentArgs.fromBundle(it).shortBreak
-        }
+
+        val preferences = LocalDataManager.getPreferences(this.requireContext())
+
+        //read data
+        shortBreak = preferences.getString("short_break", defaultShortBreak)!!
+
+
         timerDuration = shortBreak.toLong() * 60000
         val stringTimer = editTimer.setTheTimer(timerDuration)
         shortBreakTxt.text = stringTimer

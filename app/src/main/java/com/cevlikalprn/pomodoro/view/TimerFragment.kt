@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.cevlikalprn.pomodoro.EditTimer
+import com.cevlikalprn.pomodoro.LocalDataManager
 import com.cevlikalprn.pomodoro.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -34,12 +35,10 @@ class TimerFragment : Fragment() {
     private lateinit var pomodoro: String
     private lateinit var shortBreak: String
     private lateinit var longBreak: String
-    private lateinit var preferences: SharedPreferences
+  //  private lateinit var preferences: SharedPreferences
 
     //default values
     private val defaultPomodoro = "25"
-    private val defaultShortBreak = "5"
-    private val defaultLongBreak = "15"
 
     private lateinit var editTimer: EditTimer
 
@@ -69,28 +68,10 @@ class TimerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
 
-        preferences = requireContext().getSharedPreferences(requireContext().packageName,Context.MODE_PRIVATE)
+        val preferences = LocalDataManager.getPreferences(this.requireContext())
 
         //read data
         pomodoro = preferences.getString("pomodoro", defaultPomodoro)!!
-        shortBreak = preferences.getString("short_break", defaultShortBreak)!!
-        longBreak = preferences.getString("long_break",defaultLongBreak)!!
-
-        arguments?.let {
-            val isItSet = TimerFragmentArgs.fromBundle(it).isItSet
-            if(isItSet){    // SettingsFragment'da süre ayarlaması yapıldı mı?
-                pomodoro = TimerFragmentArgs.fromBundle(it).pomodoro
-                shortBreak = TimerFragmentArgs.fromBundle(it).shortBreak
-                longBreak = TimerFragmentArgs.fromBundle(it).longBreak
-            }
-        }
-
-        //put data
-        preferences.edit().putString("pomodoro", pomodoro).apply()
-        preferences.edit().putString("short_break", shortBreak).apply()
-        preferences.edit().putString("long_break", longBreak).apply()
-
-        println("$pomodoro $shortBreak $longBreak")
 
         timerDuration = pomodoro.toLong() * 60000
         val stringTimer = editTimer.setTheTimer(timerDuration)
@@ -123,14 +104,14 @@ class TimerFragment : Fragment() {
                     counter++
                     if(counter %4 == 0){ // Go to LongBreak
 
-                       //findNavController().navigate(R.id.action_timerFragment_to_longBreakFragment)
-                        val action = TimerFragmentDirections.actionTimerFragmentToLongBreakFragment(longBreak)
+                        //findNavController().navigate(R.id.action_timerFragment_to_longBreakFragment)
+                        val action = TimerFragmentDirections.actionTimerFragmentToLongBreakFragment()
                         findNavController().navigate(action)
 
                     }else{ //Go to ShortBreak
 
                         //findNavController().navigate(R.id.action_timerFragment_to_shortBreakFragment)
-                        val action = TimerFragmentDirections.actionTimerFragmentToShortBreakFragment(shortBreak)
+                        val action = TimerFragmentDirections.actionTimerFragmentToShortBreakFragment()
                         findNavController().navigate(action)
 
                     }
@@ -156,12 +137,12 @@ class TimerFragment : Fragment() {
     }
 
     private fun jumpToLongBreak(view: View) {
-        val action = TimerFragmentDirections.actionTimerFragmentToLongBreakFragment(longBreak)
+        val action = TimerFragmentDirections.actionTimerFragmentToLongBreakFragment()
         view.findNavController().navigate(action)
     }
 
     private fun jumpToShortBreak(view: View) {
-        val action = TimerFragmentDirections.actionTimerFragmentToShortBreakFragment(shortBreak)
+        val action = TimerFragmentDirections.actionTimerFragmentToShortBreakFragment()
         view.findNavController().navigate(action)
     }
 

@@ -27,22 +27,6 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
-        <argument
-            android:name="pomodoro"
-            app:argType="string"
-            android:defaultValue="25" />
-        <argument
-            android:name="shortBreak"
-            app:argType="string"
-            android:defaultValue="5" />
-        <argument
-            android:name="longBreak"
-            app:argType="string"
-            android:defaultValue="15" />
-        <argument
-            android:name="isItSet"
-            app:argType="boolean"
-            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -65,10 +49,6 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
-        <argument
-            android:name="longBreak"
-            app:argType="string"
-            android:defaultValue="15" />
     </fragment>
     <fragment
         android:id="@+id/shortBreakFragment"
@@ -82,9 +62,5 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
-        <argument
-            android:name="shortBreak"
-            app:argType="string"
-            android:defaultValue="5" />
     </fragment>
 </navigation>

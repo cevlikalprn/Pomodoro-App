@@ -7,11 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.TextView
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.cevlikalprn.pomodoro.EditTimer
+import com.cevlikalprn.pomodoro.LocalDataManager
 import com.cevlikalprn.pomodoro.R
 
 
@@ -23,6 +22,7 @@ class LongBreakFragment : Fragment() {
     private var checkBtnStart = true
     private var timerDuration: Long = 15*60000
     private var tick: Long = 1000
+    private val defaultLongBreak = "15"
     private lateinit var longBreak: String
 
     private lateinit var longBreakTimer: CountDownTimer
@@ -53,9 +53,10 @@ class LongBreakFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
 
-        arguments?.let {
-            longBreak = TimerFragmentArgs.fromBundle(it).longBreak
-        }
+        val preferences = LocalDataManager.getPreferences(this.requireContext())
+
+        //read data
+        longBreak = preferences.getString("long_break",defaultLongBreak)!!
 
         timerDuration = longBreak.toLong() * 60000
         val stringTimer = editTimer.setTheTimer(timerDuration)
