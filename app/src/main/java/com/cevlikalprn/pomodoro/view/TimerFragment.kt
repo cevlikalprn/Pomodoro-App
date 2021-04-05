@@ -1,7 +1,5 @@
 package com.cevlikalprn.pomodoro.view
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import androidx.fragment.app.Fragment
@@ -83,6 +81,7 @@ class TimerFragment : Fragment() {
         }
 
     }
+
     //Start the timer
     private fun start() {
 
@@ -123,6 +122,7 @@ class TimerFragment : Fragment() {
 
     }
 
+    // Jump to somewhere
     private fun jumpToSettings(view: View) {
         val action = TimerFragmentDirections.actionTimerFragmentToSettingsFragment()
         view.findNavController().navigate(action)
