@@ -25,7 +25,6 @@ class TimerFragment : Fragment() {
     private lateinit var btnStart: Button
     private lateinit var btnSettings: FloatingActionButton
     private lateinit var txtTimer: TextView
-
     //Değişkenler
     private var timerDuration: Long = 25*60000 // ayarlanan süre
     private var tick: Long = 1000               // tetiklenen süre
@@ -33,16 +32,11 @@ class TimerFragment : Fragment() {
     private lateinit var timer: CountDownTimer  //zamanlayıcı
     private var counter = 0 // mola dilimini ayarlamak için gerekli sayaç. 4'ün katlarında longBreak diğerlerinde shortBreak.
     private lateinit var pomodoro: String
-    private lateinit var shortBreak: String
-    private lateinit var longBreak: String
-  //  private lateinit var preferences: SharedPreferences
-
     //default values
     private val defaultPomodoro = "25"
-
+    //Edit Timer
     private lateinit var editTimer: EditTimer
 
-    //Initialize
     private fun init(){
         btnShortBreak = requireView().findViewById(R.id.btn_short_break)
         btnLongBreak = requireView().findViewById(R.id.btn_long_break)
@@ -57,10 +51,7 @@ class TimerFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_timer, container, false)
     }
 
@@ -68,15 +59,16 @@ class TimerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
 
-        val preferences = LocalDataManager.getPreferences(this.requireContext())
-
         //read data
+        val preferences = LocalDataManager.getPreferences(this.requireContext())
         pomodoro = preferences.getString("pomodoro", defaultPomodoro)!!
 
         timerDuration = pomodoro.toLong() * 60000
         val stringTimer = editTimer.setTheTimer(timerDuration)
         txtTimer.text = stringTimer
 
+
+        //Buttons
         btnShortBreak.setOnClickListener {
             jumpToShortBreak(it)
         }
@@ -91,7 +83,7 @@ class TimerFragment : Fragment() {
         }
 
     }
-
+    //Start the timer
     private fun start() {
 
         if(checkBtnStart){
