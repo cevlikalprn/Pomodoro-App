@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.TimerFragment"
     android:id="@+id/constraintLay_timerFragment">
 
 
+
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.TimerFragment"
+    >
+
+
     <TextView
-        android:id="@+id/short_break_txtview"
+        android:id="@+id/txt_timer"
         android:layout_width="245dp"
         android:layout_height="142dp"
         android:gravity="center"
@@ -83,3 +90,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

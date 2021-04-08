@@ -8,29 +8,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import com.cevlikalprn.pomodoro.LocalDataManager
 import com.cevlikalprn.pomodoro.R
+import com.cevlikalprn.pomodoro.databinding.FragmentSettingsBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class SettingsFragment : Fragment() {
 
-    private lateinit var btnOk: FloatingActionButton
-    private lateinit var pomodoroTime: EditText
-    private lateinit var shortBreakTime: EditText
-    private lateinit var longBreakTime: EditText
+   private lateinit var binding: FragmentSettingsBinding
 
     private var pomodoro = "25" //default pomodoro süresi
     private var shortBreak = "5" //default short break süresi
     private var longBreak = "15" //default long break süresi
-
-    private fun init(){
-        btnOk = requireView().findViewById(R.id.btn_ok)
-        pomodoroTime = requireView().findViewById(R.id.edt_pomodoro_time)
-        shortBreakTime = requireView().findViewById(R.id.edt_short_break_time)
-        longBreakTime = requireView().findViewById(R.id.edt_long_break_time)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,15 +33,14 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_settings, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
 
-        btnOk.setOnClickListener {
+        binding.btnOk.setOnClickListener {
             backToTimer(it)
         }
 
@@ -66,10 +57,14 @@ class SettingsFragment : Fragment() {
     }
 
     private fun getData(): Boolean{
-        if(pomodoroTime.text.toString() != "" && shortBreakTime.text.toString() != "" && longBreakTime.text.toString() != ""){
-            pomodoro = pomodoroTime.text.toString()
-            shortBreak = shortBreakTime.text.toString()
-            longBreak = longBreakTime.text.toString()
+        if(binding.edtPomodoroTime.text.toString() != ""
+            && binding.edtShortBreakTime.text.toString() != ""
+            && binding.edtLongBreakTime.text.toString() != ""
+        ){
+
+            pomodoro = binding.edtPomodoroTime.text.toString()
+            shortBreak = binding.edtShortBreakTime.text.toString()
+            longBreak = binding.edtLongBreakTime.text.toString()
 
             //Put local data
             val preferences = LocalDataManager.getPreferences(this.requireContext())

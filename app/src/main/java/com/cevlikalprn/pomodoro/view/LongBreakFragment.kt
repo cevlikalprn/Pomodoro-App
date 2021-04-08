@@ -8,16 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.cevlikalprn.pomodoro.EditTimer
 import com.cevlikalprn.pomodoro.LocalDataManager
 import com.cevlikalprn.pomodoro.R
+import com.cevlikalprn.pomodoro.databinding.FragmentLongBreakBinding
 
 
 class LongBreakFragment : Fragment() {
 
-    private lateinit var btnStart: Button
-    private lateinit var longBreakTxt: TextView
+
+    private lateinit var binding: FragmentLongBreakBinding
 
     private var checkBtnStart = true
     private var timerDuration: Long = 15*60000
@@ -26,15 +28,8 @@ class LongBreakFragment : Fragment() {
     private lateinit var longBreak: String
 
     private lateinit var longBreakTimer: CountDownTimer
-
     private lateinit var editTimer: EditTimer
 
-    private fun init(){
-        btnStart = requireView().findViewById(R.id.btn_start_long_break)
-        longBreakTxt = requireView().findViewById(R.id.long_break_txtview)
-
-        editTimer = EditTimer()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,13 +40,14 @@ class LongBreakFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_long_break, container, false)
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_long_break, container,false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
+
+        editTimer = EditTimer()
 
         val preferences = LocalDataManager.getPreferences(this.requireContext())
 
@@ -60,16 +56,16 @@ class LongBreakFragment : Fragment() {
 
         timerDuration = longBreak.toLong() * 60000
         val stringTimer = editTimer.setTheTimer(timerDuration)
-        longBreakTxt.text = stringTimer
+        binding.longBreakTxtview.text = stringTimer
 
-        btnStart.setOnClickListener {
+        binding.btnStartLongBreak.setOnClickListener {
             startLongBreak()
         }
     }
 
     private fun startLongBreak() {
         if(checkBtnStart){
-            btnStart.text = "Stop"
+            binding.btnStartLongBreak.text = "Stop"
             checkBtnStart = false
 
             longBreakTimer = object: CountDownTimer(timerDuration, tick){
@@ -79,13 +75,13 @@ class LongBreakFragment : Fragment() {
                 override fun onTick(millisUntilFinished: Long) {
                     timerDuration = millisUntilFinished
                     val stringTimer = editTimer.setTheTimer(timerDuration)
-                    longBreakTxt.text = stringTimer
+                    binding.longBreakTxtview.text = stringTimer
                 }
             }.start()
         }
         else{
             longBreakTimer.cancel()
-            btnStart.text = "Start"
+            binding.btnStartLongBreak.text = "Start"
             checkBtnStart = true
         }
     }

@@ -8,17 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.cevlikalprn.pomodoro.EditTimer
 import com.cevlikalprn.pomodoro.LocalDataManager
 import com.cevlikalprn.pomodoro.R
+import com.cevlikalprn.pomodoro.databinding.FragmentShortBreakBinding
 
 
 class ShortBreakFragment : Fragment() {
 
-    private lateinit var btnStart: Button
-
-    private lateinit var shortBreakTxt: TextView
+    private lateinit var binding: FragmentShortBreakBinding
 
     private var checkBtnStart = true
     private var timerDuration: Long = 5*60000
@@ -30,12 +30,6 @@ class ShortBreakFragment : Fragment() {
 
     private lateinit var editTimer: EditTimer
 
-    private fun init(){
-        btnStart = requireView().findViewById(R.id.btn_start_short_break)
-        shortBreakTxt = requireView().findViewById(R.id.short_break_txtview)
-
-        editTimer = EditTimer()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,14 +39,14 @@ class ShortBreakFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_short_break, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_short_break, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
 
+        editTimer = EditTimer()
 
         val preferences = LocalDataManager.getPreferences(this.requireContext())
 
@@ -62,9 +56,9 @@ class ShortBreakFragment : Fragment() {
 
         timerDuration = shortBreak.toLong() * 60000
         val stringTimer = editTimer.setTheTimer(timerDuration)
-        shortBreakTxt.text = stringTimer
+        binding.shortBreakTxtview.text = stringTimer
 
-        btnStart.setOnClickListener {
+        binding.btnStartShortBreak.setOnClickListener {
             startShortBreak()
         }
     }
@@ -72,7 +66,7 @@ class ShortBreakFragment : Fragment() {
     private fun startShortBreak() {
 
         if(checkBtnStart){
-            btnStart.text = "Stop"
+            binding.btnStartShortBreak.text = "Stop"
             checkBtnStart = false
 
             shortBreakTimer = object: CountDownTimer(timerDuration, tick){
@@ -82,13 +76,13 @@ class ShortBreakFragment : Fragment() {
                 override fun onTick(millisUntilFinished: Long) {
                     timerDuration = millisUntilFinished
                     val stringTimer = editTimer.setTheTimer(timerDuration)
-                    shortBreakTxt.text = stringTimer
+                    binding.shortBreakTxtview.text = stringTimer
                 }
             }.start()
         }
         else{
             shortBreakTimer.cancel()
-            btnStart.text = "Start"
+            binding.btnStartShortBreak.text = "Start"
             checkBtnStart = true
         }
     }
