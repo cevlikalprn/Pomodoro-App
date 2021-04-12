@@ -34,7 +34,7 @@
         android:layout_height="48dp"
         android:layout_marginTop="118dp"
         android:layout_marginBottom="128dp"
-        android:background="@color/purple_500"
+        android:background="@drawable/my_button"
         android:text="@string/start"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

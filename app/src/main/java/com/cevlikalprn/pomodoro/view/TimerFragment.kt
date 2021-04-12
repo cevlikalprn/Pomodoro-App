@@ -107,25 +107,33 @@ class TimerFragment : Fragment() {
             }.start()
         }
         else{
-            timer.cancel()
-            binding.btnStartShortBreak.text = "Start"
-            checkBtnStart = true
+            stop()
         }
 
     }
 
+    private fun stop(){
+        timer.cancel()
+        binding.btnStartShortBreak.text = "Start"
+        checkBtnStart = true
+    }
+
+
     // Jump to somewhere
     private fun jumpToSettings(view: View) {
+        stop()
         val action = TimerFragmentDirections.actionTimerFragmentToSettingsFragment()
         view.findNavController().navigate(action)
     }
 
     private fun jumpToLongBreak(view: View) {
+        stop()
         val action = TimerFragmentDirections.actionTimerFragmentToLongBreakFragment()
         view.findNavController().navigate(action)
     }
 
     private fun jumpToShortBreak(view: View) {
+        stop()
         val action = TimerFragmentDirections.actionTimerFragmentToShortBreakFragment()
         view.findNavController().navigate(action)
     }
