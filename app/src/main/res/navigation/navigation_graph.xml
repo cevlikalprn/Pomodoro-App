@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/timerFragment"
-        android:name="com.cevlikalprn.pomodoro.view.TimerFragment"
+        android:name="com.cevlikalprn.pomodoro.view.fragments.TimerFragment"
         android:label="fragment_timer"
         tools:layout="@layout/fragment_timer" >
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.cevlikalprn.pomodoro.view.SettingsFragment"
+        android:name="com.cevlikalprn.pomodoro.view.fragments.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" >
         <action
@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/longBreakFragment"
-        android:name="com.cevlikalprn.pomodoro.view.LongBreakFragment"
+        android:name="com.cevlikalprn.pomodoro.view.fragments.LongBreakFragment"
         android:label="fragment_long_break"
         tools:layout="@layout/fragment_long_break" >
         <action
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/shortBreakFragment"
-        android:name="com.cevlikalprn.pomodoro.view.ShortBreakFragment"
+        android:name="com.cevlikalprn.pomodoro.view.fragments.ShortBreakFragment"
         android:label="fragment_short_break"
         tools:layout="@layout/fragment_short_break" >
         <action

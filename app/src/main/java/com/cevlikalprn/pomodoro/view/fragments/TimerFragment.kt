@@ -1,4 +1,4 @@
-package com.cevlikalprn.pomodoro.view
+package com.cevlikalprn.pomodoro.view.fragments
 
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -6,8 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -15,10 +13,9 @@ import com.cevlikalprn.pomodoro.EditTimer
 import com.cevlikalprn.pomodoro.LocalDataManager
 import com.cevlikalprn.pomodoro.R
 import com.cevlikalprn.pomodoro.databinding.FragmentTimerBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
-class TimerFragment : Fragment() {
+class TimerFragment : Fragment(){
 
     private lateinit var binding: FragmentTimerBinding
 
@@ -68,7 +65,7 @@ class TimerFragment : Fragment() {
         binding.btnSettings.setOnClickListener {
             jumpToSettings(it)
         }
-        binding.btnStartShortBreak.setOnClickListener {
+        binding.btnStartTimer.setOnClickListener {
             start()
         }
 
@@ -78,23 +75,25 @@ class TimerFragment : Fragment() {
     private fun start() {
 
         if(checkBtnStart){
-            binding.btnStartShortBreak.text = "Stop"
+            binding.btnStartTimer.text = "Stop"
             checkBtnStart = false
 
             timer = object: CountDownTimer(timerDuration, tick){
                 override fun onFinish() {
-                    binding.btnStartShortBreak.text = "Start"
+                    binding.btnStartTimer.text = "Start"
                     counter++
                     if(counter %4 == 0){ // Go to LongBreak
 
                         //findNavController().navigate(R.id.action_timerFragment_to_longBreakFragment)
-                        val action = TimerFragmentDirections.actionTimerFragmentToLongBreakFragment()
+                        val action =
+                            TimerFragmentDirections.actionTimerFragmentToLongBreakFragment()
                         findNavController().navigate(action)
 
                     }else{ //Go to ShortBreak
 
                         //findNavController().navigate(R.id.action_timerFragment_to_shortBreakFragment)
-                        val action = TimerFragmentDirections.actionTimerFragmentToShortBreakFragment()
+                        val action =
+                            TimerFragmentDirections.actionTimerFragmentToShortBreakFragment()
                         findNavController().navigate(action)
 
                     }
@@ -114,7 +113,7 @@ class TimerFragment : Fragment() {
 
     private fun stop(){
         timer.cancel()
-        binding.btnStartShortBreak.text = "Start"
+        binding.btnStartTimer.text = "Start"
         checkBtnStart = true
     }
 

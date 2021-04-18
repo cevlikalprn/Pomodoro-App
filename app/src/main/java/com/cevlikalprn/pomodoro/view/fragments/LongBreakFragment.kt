@@ -1,4 +1,4 @@
-package com.cevlikalprn.pomodoro.view
+package com.cevlikalprn.pomodoro.view.fragments
 
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -6,8 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.cevlikalprn.pomodoro.EditTimer
