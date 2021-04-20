@@ -15,7 +15,7 @@ import com.cevlikalprn.pomodoro.R
 import com.cevlikalprn.pomodoro.databinding.FragmentTimerBinding
 
 
-class TimerFragment : Fragment(){
+class TimerFragment : Fragment(), View.OnClickListener{
 
     private lateinit var binding: FragmentTimerBinding
 
@@ -54,22 +54,37 @@ class TimerFragment : Fragment(){
         val stringTimer = editTimer.setTheTimer(timerDuration)
         binding.txtTimer.text = stringTimer
 
-
-        //Buttons
-        binding.btnShortBreak.setOnClickListener {
-            jumpToShortBreak(it)
-        }
-        binding.btnLongBreak.setOnClickListener {
-            jumpToLongBreak(it)
-        }
-        binding.btnSettings.setOnClickListener {
-            jumpToSettings(it)
-        }
-        binding.btnStartTimer.setOnClickListener {
-            start()
-        }
-
+        binding.btnShortBreak.setOnClickListener(this)
+        binding.btnLongBreak.setOnClickListener(this)
+        binding.btnSettings.setOnClickListener(this)
+        binding.btnStartTimer.setOnClickListener(this)
     }
+
+    override fun onClick(view: View?) {
+        if(view != null)
+        {
+            when(view.id)
+            {
+                R.id.btn_short_break ->
+                {
+                    jumpToShortBreak(view)
+                }
+                R.id.btn_long_break ->
+                {
+                    jumpToLongBreak(view)
+                }
+                R.id.btn_settings ->
+                {
+                    jumpToSettings(view)
+                }
+                R.id.btn_start_timer ->
+                {
+                    start()
+                }
+            }
+        }
+    }
+
 
     //Start the timer
     private fun start() {
@@ -120,19 +135,16 @@ class TimerFragment : Fragment(){
 
     // Jump to somewhere
     private fun jumpToSettings(view: View) {
-        stop()
         val action = TimerFragmentDirections.actionTimerFragmentToSettingsFragment()
         view.findNavController().navigate(action)
     }
 
     private fun jumpToLongBreak(view: View) {
-        stop()
         val action = TimerFragmentDirections.actionTimerFragmentToLongBreakFragment()
         view.findNavController().navigate(action)
     }
 
     private fun jumpToShortBreak(view: View) {
-        stop()
         val action = TimerFragmentDirections.actionTimerFragmentToShortBreakFragment()
         view.findNavController().navigate(action)
     }
